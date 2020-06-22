@@ -37,10 +37,11 @@ class CRUDBundle extends AbstractController {
         return $jsonContent;
     }
 
-    function update($data, $nameAUpdate){
-        $entityManager = $this->getDoctrine()->getManager();
-        $product = $entityManager->getRepository(Pizza::class)->findBy(['name' => $nameAUpdate]);
-        $entityManager->persist($product);
+    function update($nameAUpdate, $entityManager){
+
+
+
+
         $entityManager->flush();
 
         return 'Updated';
@@ -48,7 +49,8 @@ class CRUDBundle extends AbstractController {
 
     function delete($name){
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($name);
+        $product = $entityManager->getRepository(Pizza::class)->findOneBy(['name' => $name]);
+        $entityManager->remove($product);
         $entityManager->flush();
         return "ok";
 

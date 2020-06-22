@@ -55,19 +55,14 @@ class PizzaController extends CRUDBundle
     }
 
     /**
-     * @Route("/pizza/edit", methods={"PUT"})
+     * @Route("/pizza/edit/{name}/{ingredient1}/{ingredient2}", methods={"PUT"})
      */
     public function editPizza(Request $request){
-
-        $pizza = new Pizza();
-        $pizza->setIngredient1($request->get('ingredient1'));
-        $pizza->setIngredient2($request->get('ingredient2'));
-        $pizza->setIngredient3($request->get('ingredient3'));
-        $pizza->setIngredient4($request->get('ingredient4'));
-        $pizza->setIngredient5($request->get('ingredient5'));
-        $pizza->setName($request->get('name'));
-
-        $jsonContent = $this->update($pizza, $request->get("nameID"));
+        $entityManager = $this->getDoctrine()->getManager();
+        $product = $entityManager->getRepository(Pizza::class)->findOneBy(['name' => $request->get('name')]);
+        $product->setIngredient1($request->get('ingredient1'));
+        $product->setIngredient2($request->get('ingredient2'));
+        $jsonContent = $this->update($product, $entityManager);
 
         return new Response($jsonContent, Response::HTTP_OK);
     }
@@ -78,7 +73,7 @@ class PizzaController extends CRUDBundle
      * @Route("/pizza/delete/{name}", methods={"DELETE"})
      */
     public function deletePizza(Request $request){
-
+    var_dump($request->get('name'));
         $jsonContent = $this->delete($request->get('name'));
 
         return new Response($jsonContent, Response::HTTP_OK);
