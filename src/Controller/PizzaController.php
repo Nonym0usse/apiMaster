@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Pizza;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Library\CRUDBundle\CRUDBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,8 +68,6 @@ class PizzaController extends CRUDBundle
         return new Response($jsonContent, Response::HTTP_OK);
     }
 
-
-
     /**
      * @Route("/pizza/delete/{name}", methods={"DELETE"})
      */
@@ -78,4 +77,18 @@ class PizzaController extends CRUDBundle
 
         return new Response($jsonContent, Response::HTTP_OK);
     }
+
+    /* --- FILTER */
+
+    /**
+     * @Route("/pizza/products/", methods={"GET"})
+     */
+    public function searching(Request $request){
+        $params = $request->query->all();
+        $jsonContent = $this->search($params);
+
+
+        return new Response($jsonContent, Response::HTTP_OK);
+    }
+
 }
