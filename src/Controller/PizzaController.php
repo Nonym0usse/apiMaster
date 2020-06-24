@@ -10,12 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-
+use DateTime;
 
 class PizzaController extends CRUDBundle
 {
-
+    const repository = Pizza::class;
     /**
      * @Route("/pizza", name="pizza")
      */
@@ -43,11 +42,14 @@ class PizzaController extends CRUDBundle
     public function newPizza(Request $request){
 
         $pizza = new Pizza();
+        $date = new \DateTime('now');
+
         $pizza->setingredient1($request->get('ingredient1'));
         $pizza->setingredient2($request->get('ingredient2'));
         $pizza->setingredient3($request->get('ingredient3'));
         $pizza->setingredient4($request->get('ingredient4'));
         $pizza->setingredient5($request->get('ingredient5'));
+        $pizza->setcreatedat($date->format('d-m-Y'));
         $pizza->setName($request->get('name'));
 
         $jsonContent = $this->create($pizza);
@@ -83,12 +85,13 @@ class PizzaController extends CRUDBundle
     /**
      * @Route("/pizza/products/", methods={"GET"})
      */
-    public function searching(Request $request){
+    public function filterPizza(Request $request){
         $params = $request->query->all();
-        $jsonContent = $this->search($params);
+        $jsonContent = $this->filter($params);
 
 
         return new Response($jsonContent, Response::HTTP_OK);
     }
+
 
 }

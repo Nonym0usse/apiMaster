@@ -17,7 +17,8 @@
         "symfony/yaml": "5.1.*"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.19"
+        "symfony/maker-bundle": "^1.19",
+        "symfony/profiler-pack": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -29,7 +30,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "Library\\CRUDBundle\\": "library/CRUDBundle"
+            "Library\\CRUDBundle\\": "library/CRUDBundle",
+            "Library\\AuthentificationBundle\\": "library/AuthentificationBundle"
         }
     },
     "autoload-dev": {

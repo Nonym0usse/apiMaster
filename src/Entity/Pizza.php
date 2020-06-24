@@ -47,6 +47,13 @@ class Pizza
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $createdat;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,4 +130,17 @@ class Pizza
 
         return $this;
     }
+
+    public function getCreatedat(): ?string
+    {
+        return $this->createdat;
+    }
+
+    public function setCreatedat(string $createdat): self
+    {
+        $this->createdat = $createdat;
+
+        return $this;
+    }
+
 }
